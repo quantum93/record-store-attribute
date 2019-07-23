@@ -20,6 +20,7 @@ class Album
 
   def save
     @@albums[self.id] = Album.new(self.name, self.artist, self.genre, self.year, self.id)
+    Album.sort
   end
 
   def == (album_to_compare)
@@ -43,6 +44,12 @@ class Album
     album.name == name
     end
   end
+
+  def self.sort
+    array = @@albums.sort_by {|key, val| val.name}
+    @@albums = Hash[array.map { |key, val | [key,val]}]
+  end
+
 
   def update(name,artist,genre,year)
     self.name = name
