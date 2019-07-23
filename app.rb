@@ -34,11 +34,12 @@ get ('/albums/:id') do
   erb(:album)
 end
 
-# test Search
-# post ('/albums/:id') do
-#   @album = Album.search(params[:name])
-#   erb(:album)
-# end
+
+post ('/albums_search') do
+  name = params[:search]
+  @albums = Album.search(name)
+  erb(:album_results)
+end
 
 get ('/albums/:id/edit') do
   @album = Album.find(params[:id].to_i())

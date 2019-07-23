@@ -39,7 +39,9 @@ class Album
   end
 
   def self.search(name)
-    self.name = name
+    @@albums.values.select do |album|
+    album.name == name
+    end
   end
 
   def update(name,artist,genre,year)
