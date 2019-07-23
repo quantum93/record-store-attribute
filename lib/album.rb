@@ -1,11 +1,16 @@
+require ('pry')
+
 class Album
-  attr_reader :id, :name
-  attr_accessor :name
+  attr_reader :id
+  attr_accessor :name, :artist, :genre, :year
   @@albums = {}
   @@total_rows = 0
 
-  def initialize(name, id)
+  def initialize(name, artist, genre, year, id)
     @name = name
+    @artist = artist
+    @genre = genre
+    @year = year
     @id = id || @@total_rows +=1
   end
 
@@ -14,11 +19,14 @@ class Album
   end
 
   def save
-    @@albums[self.id] = Album.new(self.name, self.id)
+    @@albums[self.id] = Album.new(self.name, self.artist, self.genre, self.year, self.id)
   end
 
   def == (album_to_compare)
     self.name() == album_to_compare.name()
+    self.artist() == album_to_compare.artist()
+    self.genre() == album_to_compare.genre()
+    self.year() == album_to_compare.year()
   end
 
   def self.clear
@@ -30,9 +38,16 @@ class Album
     @@albums[id]
   end
 
-  def update(name)
+  def self.search(name)
     self.name = name
-    @@albums[self.id] = Album.new(self.name, self.id)
+  end
+
+  def update(name,artist,genre,year)
+    self.name = name
+    self.artist = artist
+    self.genre = genre
+    self.year = year
+    @@albums[self.id] = Album.new(self.name,self.artist, self.genre, self.year, self.id)
   end
 
   def delete
