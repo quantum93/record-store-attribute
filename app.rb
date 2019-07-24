@@ -74,7 +74,7 @@ end
 # Post a new song. After the song is added, Sinatra will route to the view for the album the song belongs to.
 post ('/albums/:id/songs') do
   @album = Album.find(params[:id].to_i())
-  song = Song.new(params[:song_name], @album.id, nil)
+  song = Song.new(params[:song_name], @album.id, params[:song_lyrics], params[:song_writer], nil)
   song.save()
   erb(:album)
 end
