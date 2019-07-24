@@ -40,4 +40,25 @@ class Song
   def self.clear
     @@songs = {}
   end
+
+  def self.find_by_album(alb_id)
+    songs = []
+    @@songs.values.each do |song|
+      if song.album_id == alb_id
+        songs.push(song)
+      end
+    end
+    songs
+  end
+
+
+# this is the issue, moving to album.rb per lessons.
+  # def songs
+  #   Song.find_by_album(self.id)
+  # end
+
+  def album
+    Album.find(self.album_id)
+  end
+
 end
