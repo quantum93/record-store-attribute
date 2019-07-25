@@ -6,12 +6,12 @@ class Album
   @@albums = {}
   @@total_rows = 0
 
-  def initialize(name, artist, genre, year, id)
-    @name = name
-    @artist = artist
-    @genre = genre
-    @year = year
-    @id = id || @@total_rows +=1
+  def initialize(attributes)
+    @name = attributes.fetch(:name)
+    @artist = attributes.fetch(:artist)
+    @genre = attributes.fetch(:genre)
+    @year = attributes.fetch(:year)
+    @id = attributes.fetch(:id) || @@total_rows +=1
   end
 
   def self.all
@@ -19,7 +19,7 @@ class Album
   end
 
   def save
-    @@albums[self.id] = Album.new(self.name, self.artist, self.genre, self.year, self.id)
+    @@albums[self.id] = self
     Album.sort
   end
 
@@ -56,7 +56,7 @@ class Album
     self.artist = artist
     self.genre = genre
     self.year = year
-    @@albums[self.id] = Album.new(self.name,self.artist, self.genre, self.year, self.id)
+    @@albums[self.id] = self
   end
 
   def delete

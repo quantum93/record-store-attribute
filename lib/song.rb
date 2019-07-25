@@ -5,12 +5,12 @@ class Song
   @@songs = {}
   @@total_rows = 0
 
-  def initialize(name, album_id, lyrics, writer, id)
-    @name = name
-    @album_id = album_id
-    @lyrics = lyrics
-    @writer = writer
-    @id = id || @@total_rows += 1
+  def initialize(attributes)
+    @name = attributes.fetch(:name)
+    @album_id = attributes.fetch(:album_id)
+    @lyrics = attributes.fetch(:lyrics)
+    @writer = attributes.fetch(:writer)
+    @id = attributes.fetch(:id) || @@total_rows += 1
   end
 
   def ==(song_to_compare)
@@ -22,7 +22,7 @@ class Song
   end
 
   def save
-    @@songs[self.id] = Song.new(self.name, self.album_id, self.lyrics, self.writer, self.id)
+    @@songs[self.id] = self
   end
 
   def self.find(id)
@@ -32,7 +32,7 @@ class Song
   def update(name, album_id)
     self.name = name
     self.album_id = album_id
-    @@songs[self.id] = Song.new(self.name, self.album_id, self.lyrics, self.writer, self.id)
+    @@songs[self.id] = self
   end
 
   def delete
@@ -43,6 +43,9 @@ class Song
     @@songs = {}
   end
 
+
+# Issues with this method returning empty array. Fails test.
+
   def self.find_by_album(alb_id)
     songs = []
     @@songs.values.each do |song|
@@ -50,6 +53,7 @@ class Song
         songs.push(song)
       end
     end
+    binding.pry
     songs
   end
 
